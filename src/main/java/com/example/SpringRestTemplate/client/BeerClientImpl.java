@@ -62,6 +62,34 @@ public class BeerClientImpl implements BeerClient{
         return restTemplate.getForObject(BASE_URL + GET_BEER_BY_ID_PATH, BeerDTO.class, beerId);
     }
 
+    /*
+    @Override
+    public Page<BeerDTO> listBeers() {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+
+    Various ways to return RestTemplate response and how to print their results
+        ResponseEntity<String> stringResponse = restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, String.class);
+    System.out.println(stringResponse.getBody());
+
+        ResponseEntity<Map> mapResponse = restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, Map.class);
+    System.out.println(mapResponse.getBody());
+
+        ResponseEntity<JsonNode> jsonResponse =
+                restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, JsonNode.class);
+
+        jsonResponse.getBody().findPath("content")
+                .elements().forEachRemaining(node -> {
+                    System.out.println(node.get("beerName").asText());
+                });
+
+    For returning a Page<> response, we need to provide jackson a custom class which will be used for deserialization from Json to Page<>
+    The custom class will extend PageImpl<T> class and provide a constructor which is annotated with @JsonCreator, check BeerPageImpl class
+        ResponseEntity<BeerPageImpl> beerPageResponse = restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, BeerPageImpl.class);
+
+        return beerPageResponse.getBody();
+    }
+    */
+
     @Override
     public void deleteBeer(UUID beerId) {
 
