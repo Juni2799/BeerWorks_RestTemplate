@@ -43,4 +43,17 @@ public class BeerClientController {
          */
         return ResponseEntity.ok(beerClient.createBeer(beerDTO));
     }
+
+    @PutMapping("/{beerId}")
+    public ResponseEntity<BeerDTO> updateBeer(@PathVariable("beerId") UUID beerId, @RequestBody BeerDTO beerDTO){
+        /* sample request body:
+         {
+            "beerName":"beer1-modified",
+            "beerStyle":"IPA",
+            "price":10.99,
+            "upc":"123245"
+          }
+         */
+        return ResponseEntity.ok(beerClient.updateBeer(beerId, beerDTO));
+    }
 }
