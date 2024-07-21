@@ -92,7 +92,8 @@ public class BeerClientImpl implements BeerClient{
 
     @Override
     public void deleteBeer(UUID beerId) {
-
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        restTemplate.delete(BASE_URL+GET_BEER_BY_ID_PATH, beerId);
     }
 
     @Override

@@ -56,4 +56,18 @@ public class BeerClientController {
          */
         return ResponseEntity.ok(beerClient.updateBeer(beerId, beerDTO));
     }
+
+    @DeleteMapping("/{beerId}")
+    public void deleteBeer(@PathVariable("beerId") UUID beerId){
+        beerClient.deleteBeer(beerId);
+    }
+
+    //TODO: try patch implementation as well
+
+    /*
+    @GetMapping
+    public ResponseEntity<Page<BeerDTO>> getBeers(){
+        return ResponseEntity.ok(beerClient.listBeers());
+    }
+    */
 }
