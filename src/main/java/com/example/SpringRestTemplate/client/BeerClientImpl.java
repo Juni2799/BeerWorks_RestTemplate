@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.UUID;
 
+@Service
 public class BeerClientImpl implements BeerClient{
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
