@@ -5,6 +5,7 @@ import com.example.SpringRestTemplate.model.BeerDTO;
 import com.example.SpringRestTemplate.model.BeerStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -27,5 +28,19 @@ public class BeerClientController {
                                   @RequestParam(required = false) Integer pageNumber,
                                   @RequestParam(required = false) Integer pageSize){
         return beerClient.listBeers(beerName, beerStyle, showInventory, pageNumber, pageSize);
+    }
+
+    @PostMapping
+    public ResponseEntity<BeerDTO> createBeer(@RequestBody BeerDTO beerDTO){
+        /* sample request body:
+        {
+            "price":10.99,
+            "beerName":"beer1",
+            "beerStyle":"IPA",
+            "quantityOnHand":50,
+            "upc":"123245"
+        }
+         */
+        return ResponseEntity.ok(beerClient.createBeer(beerDTO));
     }
 }
