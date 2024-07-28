@@ -26,11 +26,16 @@ public class BeerClientImpl implements BeerClient{
     private String GET_BEER_PATH;
     @Value("${beer.works.get.beer.by.id.path}")
     private String GET_BEER_BY_ID_PATH;
-
+    @Value("${rest.template.username}")
+    private String authUserName;
+    @Value("${rest.template.password}")
+    private String authPassword;
     //For working with Query Parameters, like /api?param1=val1&param2=val2
     @Override
     public Page<BeerDTO> listBeers(String beerName, BeerStyle beerStyle, Boolean showInventory, Integer pageNumber, Integer pageSize) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+        RestTemplate restTemplate = restTemplateBuilder
+                .basicAuthentication(authUserName, authPassword)
+                .build();
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromPath(GET_BEER_PATH);
 
         if(StringUtils.hasText(beerName)){
@@ -60,7 +65,9 @@ public class BeerClientImpl implements BeerClient{
     //For working with URL parameters, like /api/{beerId}
     @Override
     public BeerDTO getBeerById(UUID beerId) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+        RestTemplate restTemplate = restTemplateBuilder
+                .basicAuthentication(authUserName, authPassword)
+                .build();
         return restTemplate.getForObject(BASE_URL + GET_BEER_BY_ID_PATH, BeerDTO.class, beerId);
     }
 
@@ -94,20 +101,26 @@ public class BeerClientImpl implements BeerClient{
 
     @Override
     public void deleteBeer(UUID beerId) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+        RestTemplate restTemplate = restTemplateBuilder
+                .basicAuthentication(authUserName, authPassword)
+                .build();
         restTemplate.delete(BASE_URL+GET_BEER_BY_ID_PATH, beerId);
     }
 
     @Override
     public BeerDTO updateBeer(UUID beerId, BeerDTO beerDto) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+        RestTemplate restTemplate = restTemplateBuilder
+                .basicAuthentication(authUserName, authPassword)
+                .build();
         restTemplate.put(BASE_URL+GET_BEER_BY_ID_PATH, beerDto, beerId);
         return this.getBeerById(beerId);
     }
 
     @Override
     public BeerDTO createBeer(BeerDTO beerDTO) {
-        RestTemplate restTemplate = restTemplateBuilder.build();
+        RestTemplate restTemplate = restTemplateBuilder
+                .basicAuthentication(authUserName, authPassword)
+                .build();
         ResponseEntity<BeerDTO> response = restTemplate.postForEntity(BASE_URL+GET_BEER_PATH, beerDTO, BeerDTO.class);
 
         String responseBeerByIdUrl = response.getHeaders().get("Location-By-Id").get(0);
